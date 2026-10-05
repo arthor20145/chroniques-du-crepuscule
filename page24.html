@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le secret du masque — Page 24</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-scene="24">
+<main class="page-shell">
+<header>
+  <div class="stats-bar">
+    <span class="stat-chip">❤️ PV : <strong id="stat-hp">—</strong></span>
+    <span class="stat-chip">⚔️ Puissance : <strong id="stat-power">—</strong></span>
+    <span class="stat-chip">✨ Magie : <strong id="stat-magic">—</strong></span>
+    <span class="stat-chip">⭐ Réputation : <strong id="stat-reputation">—</strong></span>
+  </div>
+  <div class="inventory-box">🎒 <strong>Inventaire :</strong> <span id="inventory">—</span></div>
+</header>
+
+<article>
+  <div><strong>Page 24 / 40</strong></div>
+  <h1>Le secret du masque</h1>
+  <img class="scene-image" src="images/page24.png" alt="Illustration de la page 24">
+  <div class="scene-text"><p>La silhouette masquée révèle son visage : c&#x27;est le dernier Gardien du Crépuscule. Il explique que les démons ne sont pas les seuls responsables de la crise.</p></div>
+  <div id="message"></div>
+  <nav class="choices">
+    <a class="choice button" href="page29.html" onclick="try{applyEffects({});}catch(e){}">L&#x27;écouter</a><a class="choice button" href="page23.html" onclick="try{applyEffects({});}catch(e){}">Le combattre</a><a class="choice button" href="page30.html" onclick="try{applyEffects({});}catch(e){}">Lui demander son alliance</a>
+    
+  </nav>
+</article>
+
+<footer style="margin-top:28px;display:flex;gap:10px;flex-wrap:wrap">
+  <a class="button" href="page23.html">← Page précédente</a>
+  <a class="button" href="index.html">Menu</a>
+  <button class="button" data-reset>↻ Recommencer</button>
+</footer>
+</main>
+<script>
+const DEFAULT_STATE = {
+  hp: 100, maxHp: 100, power: 10, magic: 10, reputation: 0,
+  inventory: [], visited: [], flags: {}
+};
+
+function loadState() {
+  try {
+    return Object.assign(structuredClone(DEFAULT_STATE),
+      JSON.parse(localStorage.getItem("cdc_state") || "{}"));
+  } catch { return structuredClone(DEFAULT_STATE); }
+}
+function saveState(s) {
+  localStorage.setItem("cdc_state", JSON.stringify(s));
+  renderState();
+}
+function resetGame() {
+  localStorage.removeItem("cdc_state");
+  window.location.href = "page01.html";
+}
+function applyEffects(effects = {}) {
+  const s = loadState();
+  for (const [k,v] of Object.entries(effects)) {
+    if (k === "inventoryAdd" && !s.inventory.includes(v)) s.inventory.push(v);
+    else if (k === "inventoryRemove") s.inventory = s.inventory.filter(x=>x!==v);
+    else if (k === "flag" && Array.isArray(v)) s.flags[v[0]] = v[1];
+    else if (k in s && typeof v === "number") s[k] += v;
+  }
+  s.hp = Math.max(0, Math.min(s.hp, s.maxHp));
+  const scene = Number(document.body.dataset.scene || 0);
+  if (scene && !s.visited.includes(scene)) s.visited.push(scene);
+  saveState(s);
+}
+function conditionOK(c) {
+  if (!c) return true;
+  const s = loadState();
+  if (c.item && !s.inventory.includes(c.item)) return false;
+  if (c.minPower != null && s.power < c.minPower) return false;
+  if (c.minMagic != null && s.magic < c.minMagic) return false;
+  if (c.minReputation != null && s.reputation < c.minReputation) return false;
+  if (c.flag && s.flags[c.flag[0]] !== c.flag[1]) return false;
+  return true;
+}
+function goTo(page, effects = {}, condition = null) {
+  if (!conditionOK(condition)) {
+    const box = document.getElementById("message");
+    if (box) {
+      box.textContent = (condition && condition.message) ||
+        "Cette voie n'est pas accessible pour le moment.";
+      box.classList.add("show");
+    }
+    return;
+  }
+  applyEffects(effects);
+  window.location.href = `page${String(page).padStart(2,"0")}.html`;
+}
+function renderState() {
+  const s = loadState();
+  const set = (id,v)=>{const e=document.getElementById(id); if(e)e.textContent=v};
+  set("stat-hp", `${s.hp}/${s.maxHp}`);
+  set("stat-power", s.power);
+  set("stat-magic", s.magic);
+  set("stat-reputation", s.reputation);
+  set("inventory", s.inventory.length ? s.inventory.join(" • ") : "Aucun objet");
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+  const n = Number(document.body.dataset.scene || 0);
+  const s = loadState();
+  if (n && !s.visited.includes(n)) { s.visited.push(n); saveState(s); }
+  renderState();
+  document.querySelectorAll("[data-reset]").forEach(b=>b.addEventListener("click",resetGame));
+});
+</script>
+</body>
+</html>

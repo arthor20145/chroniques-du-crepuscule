@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chroniques du Crépuscule — Livre-jeu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page-shell">
+<h1>Chroniques du Crépuscule</h1>
+<p>Le livre-jeu est maintenant séparé en 40 pages HTML indépendantes.</p>
+<div class="choices">
+<a class="button" href="page01.html">▶ Commencer l'aventure</a>
+<button class="button" data-reset>↻ Nouvelle partie</button>
+</div>
+<h2>Les 40 pages</h2>
+<div class="choices">
+<a class="button" href="page01.html">Page 01</a>
+<a class="button" href="page02.html">Page 02</a>
+<a class="button" href="page03.html">Page 03</a>
+<a class="button" href="page04.html">Page 04</a>
+<a class="button" href="page05.html">Page 05</a>
+<a class="button" href="page06.html">Page 06</a>
+<a class="button" href="page07.html">Page 07</a>
+<a class="button" href="page08.html">Page 08</a>
+<a class="button" href="page09.html">Page 09</a>
+<a class="button" href="page10.html">Page 10</a>
+<a class="button" href="page11.html">Page 11</a>
+<a class="button" href="page12.html">Page 12</a>
+<a class="button" href="page13.html">Page 13</a>
+<a class="button" href="page14.html">Page 14</a>
+<a class="button" href="page15.html">Page 15</a>
+<a class="button" href="page16.html">Page 16</a>
+<a class="button" href="page17.html">Page 17</a>
+<a class="button" href="page18.html">Page 18</a>
+<a class="button" href="page19.html">Page 19</a>
+<a class="button" href="page20.html">Page 20</a>
+<a class="button" href="page21.html">Page 21</a>
+<a class="button" href="page22.html">Page 22</a>
+<a class="button" href="page23.html">Page 23</a>
+<a class="button" href="page24.html">Page 24</a>
+<a class="button" href="page25.html">Page 25</a>
+<a class="button" href="page26.html">Page 26</a>
+<a class="button" href="page27.html">Page 27</a>
+<a class="button" href="page28.html">Page 28</a>
+<a class="button" href="page29.html">Page 29</a>
+<a class="button" href="page30.html">Page 30</a>
+<a class="button" href="page31.html">Page 31</a>
+<a class="button" href="page32.html">Page 32</a>
+<a class="button" href="page33.html">Page 33</a>
+<a class="button" href="page34.html">Page 34</a>
+<a class="button" href="page35.html">Page 35</a>
+<a class="button" href="page36.html">Page 36</a>
+<a class="button" href="page37.html">Page 37</a>
+<a class="button" href="page38.html">Page 38</a>
+<a class="button" href="page39.html">Page 39</a>
+<a class="button" href="page40.html">Page 40</a>
+</div>
+</main>
+<script>
+function resetGame(){localStorage.removeItem("cdc_state");window.location.href="page01.html";}
+document.addEventListener("DOMContentLoaded",()=>document.querySelectorAll("[data-reset]").forEach(b=>b.addEventListener("click",resetGame)));
+</script>
+</body>
+</html>
