@@ -26,3 +26,49 @@ a
 {
     color: cadetblue;
 }
+
+/* Les attributs [hidden] doivent réellement masquer les éléments, même si */
+/* une classe leur donne un display explicite (ex. .choices{display:grid}). */
+[hidden]{display:none!important}
+
+/* Message d'information (injecté par le script des pages). */
+#message.show{margin:18px 0;padding:12px 16px;border-left:4px solid var(--gold,#e5c36a);border-radius:10px;background:#1b1a12e6;color:#f3e6bb}
+
+/* ---------- Boutons de navigation (choix, page suivante / précédente, menu) ---------- */
+/* Les liens <a class="button"> se comportent et s'affichent comme de vrais boutons. */
+a.button,.choice{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 18px;border:1px solid #6d5b35;border-radius:12px;
+  background:linear-gradient(180deg,#d6b563,#8f6e2c);color:#15120b;
+  font:inherit;font-weight:700;line-height:1.3;text-align:center;text-decoration:none;
+  cursor:pointer;box-shadow:0 7px 18px #0004;
+  transition:transform .15s,filter .15s,box-shadow .15s;
+}
+a.button:hover,.choice:hover{transform:translateY(-2px);filter:brightness(1.08);text-decoration:none;color:#15120b}
+a.button:active,.choice:active{transform:translateY(0);filter:brightness(.95)}
+a.button:focus-visible,.choice:focus-visible{outline:2px solid #f5da8a;outline-offset:2px}
+a.button.ghost{background:#171a27;color:#e8e5ef;border-color:var(--line,#35394e);box-shadow:none}
+a.button.ghost:hover{background:#1f2334;color:#e8e5ef}
+
+/* Les choix d'embranchement remplissent la grille .choices */
+.choices a.choice,.choices a.button{width:100%;min-height:64px;text-align:left}
+
+/* ---------- Mini-jeu : Le Sceau des Anciens (page 26) ---------- */
+.minigame{margin:26px 0;padding:22px;border:1px solid var(--line,#35394e);border-radius:18px;background:linear-gradient(150deg,#191d2df2,#0e111af5);box-shadow:0 18px 50px #0007}
+.minigame-title{margin:0 0 10px;color:#f5da8a}
+.minigame-help{margin:0 0 16px;line-height:1.6;color:#cfcbdb}
+.minigame-status{margin:16px 0;padding:12px 14px;border:1px solid var(--line,#35394e);border-radius:12px;background:#12141f;color:#e8e5ef;min-height:1.25em}
+.minigame-status strong{color:#f5da8a}
+.rune-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.rune{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:2rem;line-height:1;padding:16px 6px;border:1px solid #5a4a2a;border-radius:14px;background:linear-gradient(180deg,#232742,#161a2b);color:#f0d79a;box-shadow:0 6px 16px #0005;transition:transform .12s,box-shadow .2s,background .2s}
+.rune span{font-size:.68rem;letter-spacing:1px;text-transform:uppercase;opacity:.7;color:#cfc7ae;font-family:Inter,Arial,sans-serif}
+.rune:hover:not(:disabled){transform:translateY(-2px)}
+.rune:disabled{opacity:.5;cursor:default}
+.rune.lit{background:radial-gradient(circle,#ffe9a8,#c79b3a);color:#1a1408;border-color:#ffe9a8;box-shadow:0 0 26px #f0c75e99;transform:scale(1.05)}
+.minigame-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.minigame-progress{display:flex;gap:8px;margin-top:4px}
+.seal-pip{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1px solid #5a4a2a;background:#161a2b;color:#cfc7ae;font-size:.8rem;font-weight:700}
+.seal-pip.current{border-color:#f5da8a;color:#f5da8a;box-shadow:0 0 12px #f0c75e66}
+.seal-pip.done{background:#c79b3a;border-color:#ffe9a8;color:#1a1408}
+.minigame.solved{border-color:#9e8a4a}
+@media(max-width:520px){.rune-grid{grid-template-columns:repeat(2,1fr)}.rune{font-size:1.7rem}}
